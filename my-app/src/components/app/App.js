@@ -7,6 +7,12 @@ import EmplList from "../employees-list/employees-list";
 import "./App.css";
 
 function App() {
+   const data = [
+      { name: "Alex Garsia", salary: 850, increase: false, id: 1 },
+      { name: "Nikolas Emmet", salary: 2300, increase: true, id: 2 },
+      { name: "Robertto Petrucho", salary: 1500, increase: false, id: 3 },
+   ];
+
    return (
       <div className="App">
          <AppInfo countOfEmpl={7} countOfPremiya={4} />
@@ -14,7 +20,7 @@ function App() {
             <SearchPanel />
             <AppFilter />
          </div>
-         <EmplList />
+         <EmplList data={data} />
          <AddForm />
       </div>
    );
