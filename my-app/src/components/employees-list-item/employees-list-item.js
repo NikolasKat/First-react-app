@@ -11,15 +11,30 @@ export default function EmplListItem({ name, salary }) {
 
    const makeFavorite = () => {
       setLike(!like);
-      console.log("click");
+   };
+
+   const addLikeName = () => {
+      if (like) {
+         return " like";
+      } else {
+         return "";
+      }
+   };
+
+   const addIncreaseName = () => {
+      if (incr) {
+         return " increase";
+      } else {
+         return "";
+      }
    };
 
    return (
       <li
          className={
-            incr
-               ? "list-group-item d-flex justify-content-between increase"
-               : "list-group-item d-flex justify-content-between"
+            "list-group-item d-flex justify-content-between" +
+            addIncreaseName() +
+            addLikeName()
          }
       >
          <span className="list-group-item-label" onClick={makeFavorite}>
