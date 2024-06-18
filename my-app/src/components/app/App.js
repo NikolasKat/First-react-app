@@ -28,13 +28,15 @@ class App extends Component {
                id: 2,
             },
             {
-               name: "Robertto Petrucho",
+               name: "Roberto Petrucho",
                salary: 1500,
                increase: false,
                rise: false,
                id: 3,
             },
          ],
+         term: "",
+         filt: 0,
       };
       this.maxId = 4;
    }
@@ -101,22 +103,51 @@ class App extends Component {
       });
    };
 
+   onSearch = (items, term) => {
+      if (term.length === 0) {
+         return items;
+      } else {
+         return items.filter((item) => item.name.indexOf(term) > -1);
+      }
+   };
+
+   onUpdateSearch = (term) => {
+      this.setState({ term: term });
+   };
+
+   onFilt = (items, filt) => {
+      switch (filt) {
+         case "rice":
+            return items.filter((item) => item.rise);
+         case "1000More":
+            return items.filter((item) => item.salary > 1000);
+         default:
+            return items;
+      }
+   };
+
+   onUpdateFilt = (filt) => {
+      this.setState({ filt: filt });
+   };
+
    render() {
-      const { data } = this.state,
+      const { data, term, filt } = this.state,
          employees = data.length,
-         emplWBonus = data.filter((item) => item.increase === true).length;
+         emplWBonus = data.filter((item) => item.increase === true).length,
+         newData = this.onFilt(this.onSearch(data, term), filt);
+
       return (
          <div className="App">
             <AppInfo countOfEmpl={employees} countOfPremiya={emplWBonus} />
             <div className="search-panel">
-               <SearchPanel />
-               <AppFilter />
+               <SearchPanel onUpdateSearch={this.onUpdateSearch} />
+               <AppFilter onUpdateFilt={this.onUpdateFilt} />
             </div>
             <EmplList
-               data={data}
                onDelete={this.deleteItem}
                onToggleIncrease={this.onToggleIncrease}
                onToggleRise={this.onToggleRise}
+               data={newData}
             />
             <AddForm onAdd={this.addItem} />
          </div>
